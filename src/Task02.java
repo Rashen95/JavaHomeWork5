@@ -20,6 +20,7 @@
 //        Написать программу, которая найдет и выведет повторяющиеся имена с количеством повторений.
 //        Отсортировать по убыванию популярности.
 
+import javax.crypto.spec.PSource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,20 +67,21 @@ public class Task02 {
         Map<Integer, String> sorted_employees = new HashMap<>();
         key = 1;
         for (int i = 0; i < sorted_names.size(); i++) {
+            ArrayList<String> massive = new ArrayList<>();
             for (Map.Entry<String, Integer> item : sorted_names.entrySet()) {
-                ArrayList<String> massive = new ArrayList<>();
                 if (item.getValue() == max_count) {
                     for (String items : employees_string2) {
                         if (items.split(" ")[0].equals(item.getKey())) {
                             massive.add(items);
                         }
                     }
-                    Collections.sort(massive);
-                    for (String itemes : massive) {
-                        sorted_employees.put(key, itemes);
-                        key += 1;
-                    }
+
                 }
+            }
+            Collections.sort(massive);
+            for (String itemes : massive) {
+                sorted_employees.put(key, itemes);
+                key += 1;
             }
             max_count -= 1;
         }
