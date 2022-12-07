@@ -77,6 +77,9 @@ public class Task02 {
 
                 }
             }
+            if (massive.size() == 0) {
+                break;
+            }
             Collections.sort(massive);
             for (String itemes : massive) {
                 sorted_employees.put(key, itemes);
