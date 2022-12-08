@@ -38,6 +38,7 @@ public class Task02 {
             employees.put(key, item);
             key += 1;
         }
+        // Вывод списка сотрудников
         System.out.println("Список сотрудников:");
         for (Map.Entry<Integer, String> item : employees.entrySet()) {
             System.out.printf("Сотрудник: %s \n", item.getValue());
@@ -57,6 +58,9 @@ public class Task02 {
         System.out.println();
         System.out.println("Имена и количество повторений:");
         int max_count = 1;
+        // Вывод списка имен и количества их повторений,
+        // а так же нахождение максимального количества
+        // повторений одного имени
         for (Map.Entry<String, Integer> item : sorted_names.entrySet()) {
             System.out.printf("Имя: %s  Количество: %d \n", item.getKey(), item.getValue());
             if (item.getValue() > max_count) max_count = item.getValue();
@@ -65,7 +69,9 @@ public class Task02 {
         System.out.println("Сортирую в порядке убывания популярности имени:");
         Map<Integer, String> sorted_employees = new HashMap<>();
         key = 1;
-        for (int i = 0; i < sorted_names.size(); i++) {
+        // С помощью создания вспомогательного списка вношу в него имена с определенным количеством повторений,
+        // сортировка списка и внесение в итоговый словарь
+        for (int i = max_count; i > 0; i--) {
             ArrayList<String> massive = new ArrayList<>();
             for (Map.Entry<String, Integer> item : sorted_names.entrySet()) {
                 if (item.getValue() == max_count) {
@@ -76,9 +82,6 @@ public class Task02 {
                     }
 
                 }
-            }
-            if (massive.size() == 0) {
-                break;
             }
             Collections.sort(massive);
             for (String itemes : massive) {
