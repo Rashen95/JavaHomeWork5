@@ -4,20 +4,22 @@ public class Task04 {
     public static void main(String[] args) {
         String[][] game_board = new String[8][8];
         int count = 0;
+        System.out.println("Ожидайте, перебираю варианты...");
         do {
             for (int i = 0; i < game_board.length; i++) {
                 for (int j = 0; j < game_board.length; j++) {
                     game_board[i][j] = "[ ]";
                 }
             }
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
-            game_board[(int) (Math.random() * 8)][(int) (Math.random() * 8)] = "[+]";
+            int amount = 0;
+            while (amount < 8) {
+                int line = (int) (Math.random() * 8);
+                int column = (int) (Math.random() * 8);
+                if (!game_board[line][column].equals("[+]")) {
+                    game_board[line][column] = "[+]";
+                    amount += 1;
+                }
+            }
             count += 1;
         } while (!checker(game_board));
         System.out.println("Я перебрал " + count + " вариантов и нашел расположение ферзей удовлетворяющих условию");
@@ -30,18 +32,10 @@ public class Task04 {
     }
 
     public static boolean checker(String[][] game_board) {
-        int count = 0;
-        boolean flag = true;
-        if (!check_horizontal(game_board)) flag = false;
+        boolean flag = check_horizontal(game_board);
         if (!check_vertical(game_board)) flag = false;
         if (!check_diagonal_left_right(game_board)) flag = false;
         if (!check_diagonal_right_left(game_board)) flag = false;
-        for (String[] strings : game_board) {
-            for (int j = 0; j < game_board.length; j++) {
-                if (strings[j].equals("[+]")) count += 1;
-            }
-        }
-        if (count != 8) flag = false;
         return flag;
     }
 
