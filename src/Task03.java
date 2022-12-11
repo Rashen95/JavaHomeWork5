@@ -1,13 +1,32 @@
 //Реализовать алгоритм пирамидальной сортировки (HeapSort).
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Task03 {
     public static void main(String[] args) {
-        int[] massive = new int[]{1, 7, 12, 8, 15, 19, 15, 10, 1, -15};
+        int[] massive = new int[500];
+        Random r = new Random();
+        for (int i = 0; i < massive.length; i++) {
+            massive[i] = r.nextInt(1, 51);
+        }
         ArrayList<Integer> support_massive = new ArrayList<>();
-        sorter(massive, support_massive);
+        for (int j : massive) {
+            support_massive.add(j);
+        }
+        System.out.println("Изначальный массив:");
         System.out.println(support_massive);
+        System.out.println();
+        support_massive.clear();
+        long start = System.currentTimeMillis();
+        sorter(massive, support_massive);
+        long finish = System.currentTimeMillis();
+        long elapsed = finish - start;
+        System.out.println("Сортированный массив:");
+        System.out.println(support_massive);
+        System.out.println();
+        System.out.println("На сортировку массива из " + massive.length + " элементов понадобилось "
+                + (double) (elapsed) / 1000 + " сек");
     }
 
     public static void sorter(int[] massive, ArrayList<Integer> support_massive) {
