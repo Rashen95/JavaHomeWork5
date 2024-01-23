@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Task03 {
     public static void main(String[] args) {
-        int[] massive = new int[500];
+        int[] massive = new int[5000];
         Random r = new Random();
         for (int i = 0; i < massive.length; i++) {
             massive[i] = r.nextInt(1, 51);

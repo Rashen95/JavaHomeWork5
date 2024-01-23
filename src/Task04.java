@@ -1,456 +1,100 @@
 //На шахматной доске расставить 8 ферзей так, чтобы они не били друг друга.
 
+import java.util.Arrays;
+
 public class Task04 {
+    private static int count = 0;
+    private final static int boardSize = 8;
+
     public static void main(String[] args) {
+        //Засекаем время начала операции поиска вариантов
         long start = System.currentTimeMillis();
-        String[][] game_board = new String[8][8];
-        for (int i = 0; i < game_board.length; i++) {
-            for (int j = 0; j < game_board.length; j++) {
-                if (j == 0) {
-                    game_board[i][j] = "[+]";
-                } else {
-                    game_board[i][j] = "[ ]";
-                }
-            }
-        }
-        enumeration_of_options(game_board);
+
+        //Поиск всех вариантов
+        tryToPlace(createEmptyBoard(boardSize), 0);
+
+        //Засекаем время окончания операции поиска вариантов
         long finish = System.currentTimeMillis();
         long elapsed = finish - start;
         System.out.println("На выполнение потребовалось " + (double) (elapsed) / 1000 + " сек");
     }
 
-    public static void enumeration_of_options(String[][] game_board) {
-        for (int i = 1; i < game_board.length; i++) {
-            for (int j = 1; j < game_board.length; j++) {
-                for (int k = 1; k < game_board.length; k++) {
-                    for (int l = 1; l < game_board.length; l++) {
-                        for (int m = 1; m < game_board.length; m++) {
-                            for (int n = 1; n < game_board.length; n++) {
-                                for (int o = 1; o < game_board.length; o++) {
-                                    for (int p = 1; p < game_board.length; p++) {
-                                        game_board[0][p - 1] = "[ ]";
-                                        game_board[0][p] = "[+]";
-                                        if (checker(game_board)) {
-                                            printer(game_board);
-                                            System.out.println();
-                                        }
-                                        if (p == game_board.length - 1) {
-                                            game_board[0][p] = "[ ]";
-                                            game_board[0][0] = "[+]";
-                                        }
-                                    }
-                                    game_board[1][o - 1] = "[ ]";
-                                    game_board[1][o] = "[+]";
-                                    if (o == game_board.length - 1) {
-                                        game_board[1][o] = "[ ]";
-                                        game_board[1][0] = "[+]";
-                                    }
-                                }
-                                game_board[2][n - 1] = "[ ]";
-                                game_board[2][n] = "[+]";
-                                if (n == game_board.length - 1) {
-                                    game_board[2][n] = "[ ]";
-                                    game_board[2][0] = "[+]";
-                                }
-                            }
-                            game_board[3][m - 1] = "[ ]";
-                            game_board[3][m] = "[+]";
-                            if (m == game_board.length - 1) {
-                                game_board[3][m] = "[ ]";
-                                game_board[3][0] = "[+]";
-                            }
-                        }
-                        game_board[4][l - 1] = "[ ]";
-                        game_board[4][l] = "[+]";
-                        if (l == game_board.length - 1) {
-                            game_board[4][l] = "[ ]";
-                            game_board[4][0] = "[+]";
-                        }
-                    }
-                    game_board[5][k - 1] = "[ ]";
-                    game_board[5][k] = "[+]";
-                    if (k == game_board.length - 1) {
-                        game_board[5][k] = "[ ]";
-                        game_board[5][0] = "[+]";
-                    }
-                }
-                game_board[6][j - 1] = "[ ]";
-                game_board[6][j] = "[+]";
-                if (j == game_board.length - 1) {
-                    game_board[6][j] = "[ ]";
-                    game_board[6][0] = "[+]";
-                }
-            }
-            game_board[7][i - 1] = "[ ]";
-            game_board[7][i] = "[+]";
+    /**
+     * Метод создает пустое игровое поле
+     *
+     * @param boardSize размер игрового поля
+     * @return пустое игровое поле
+     */
+    private static String[][] createEmptyBoard(int boardSize) {
+        String[][] emptyBoard = new String[boardSize][boardSize];
+        for (String[] strings : emptyBoard) {
+            Arrays.fill(strings, "[ ]");
         }
-        for (int i = 1; i < game_board.length; i++) {
-            for (int j = 1; j < game_board.length; j++) {
-                for (int k = 1; k < game_board.length; k++) {
-                    for (int l = 1; l < game_board.length; l++) {
-                        for (int m = 1; m < game_board.length; m++) {
-                            for (int n = 1; n < game_board.length; n++) {
-                                for (int o = 1; o < game_board.length; o++) {
-                                    game_board[0][o - 1] = "[ ]";
-                                    game_board[0][o] = "[+]";
-                                    if (checker(game_board)) {
-                                        printer(game_board);
-                                        System.out.println();
-                                    }
-                                    if (o == game_board.length - 1) {
-                                        game_board[0][o] = "[ ]";
-                                        game_board[0][0] = "[+]";
-                                    }
-                                }
-                                game_board[1][n - 1] = "[ ]";
-                                game_board[1][n] = "[+]";
-                                if (n == game_board.length - 1) {
-                                    game_board[1][n] = "[ ]";
-                                    game_board[1][0] = "[+]";
-                                }
-                            }
-                            game_board[2][m - 1] = "[ ]";
-                            game_board[2][m] = "[+]";
-                            if (m == game_board.length - 1) {
-                                game_board[2][m] = "[ ]";
-                                game_board[2][0] = "[+]";
-                            }
-                        }
-                        game_board[3][l - 1] = "[ ]";
-                        game_board[3][l] = "[+]";
-                        if (l == game_board.length - 1) {
-                            game_board[3][l] = "[ ]";
-                            game_board[3][0] = "[+]";
-                        }
-                    }
-                    game_board[4][k - 1] = "[ ]";
-                    game_board[4][k] = "[+]";
-                    if (k == game_board.length - 1) {
-                        game_board[4][k] = "[ ]";
-                        game_board[4][0] = "[+]";
-                    }
-                }
-                game_board[5][j - 1] = "[ ]";
-                game_board[5][j] = "[+]";
-                if (j == game_board.length - 1) {
-                    game_board[5][j] = "[ ]";
-                    game_board[5][0] = "[+]";
-                }
-            }
-            game_board[6][i - 1] = "[ ]";
-            game_board[6][i] = "[+]";
-        }
-        for (int i = 1; i < game_board.length; i++) {
-            for (int j = 1; j < game_board.length; j++) {
-                for (int k = 1; k < game_board.length; k++) {
-                    for (int l = 1; l < game_board.length; l++) {
-                        for (int m = 1; m < game_board.length; m++) {
-                            for (int n = 1; n < game_board.length; n++) {
-                                game_board[0][n - 1] = "[ ]";
-                                game_board[0][n] = "[+]";
-                                if (checker(game_board)) {
-                                    printer(game_board);
-                                    System.out.println();
-                                }
-                                if (n == game_board.length - 1) {
-                                    game_board[0][n] = "[ ]";
-                                    game_board[0][0] = "[+]";
-                                }
-                            }
-                            game_board[1][m - 1] = "[ ]";
-                            game_board[1][m] = "[+]";
-                            if (m == game_board.length - 1) {
-                                game_board[1][m] = "[ ]";
-                                game_board[1][0] = "[+]";
-                            }
-                        }
-                        game_board[2][l - 1] = "[ ]";
-                        game_board[2][l] = "[+]";
-                        if (l == game_board.length - 1) {
-                            game_board[2][l] = "[ ]";
-                            game_board[2][0] = "[+]";
-                        }
-                    }
-                    game_board[3][k - 1] = "[ ]";
-                    game_board[3][k] = "[+]";
-                    if (k == game_board.length - 1) {
-                        game_board[3][k] = "[ ]";
-                        game_board[3][0] = "[+]";
-                    }
-                }
-                game_board[4][j - 1] = "[ ]";
-                game_board[4][j] = "[+]";
-                if (j == game_board.length - 1) {
-                    game_board[4][j] = "[ ]";
-                    game_board[4][0] = "[+]";
-                }
-            }
-            game_board[5][i - 1] = "[ ]";
-            game_board[5][i] = "[+]";
-        }
-        for (int i = 1; i < game_board.length; i++) {
-            for (int j = 1; j < game_board.length; j++) {
-                for (int k = 1; k < game_board.length; k++) {
-                    for (int l = 1; l < game_board.length; l++) {
-                        for (int m = 1; m < game_board.length; m++) {
-                            game_board[0][m - 1] = "[ ]";
-                            game_board[0][m] = "[+]";
-                            if (checker(game_board)) {
-                                printer(game_board);
-                                System.out.println();
-                            }
-                            if (m == game_board.length - 1) {
-                                game_board[0][m] = "[ ]";
-                                game_board[0][0] = "[+]";
-                            }
-                        }
-                        game_board[1][l - 1] = "[ ]";
-                        game_board[1][l] = "[+]";
-                        if (l == game_board.length - 1) {
-                            game_board[1][l] = "[ ]";
-                            game_board[1][0] = "[+]";
-                        }
-                    }
-                    game_board[2][k - 1] = "[ ]";
-                    game_board[2][k] = "[+]";
-                    if (k == game_board.length - 1) {
-                        game_board[2][k] = "[ ]";
-                        game_board[2][0] = "[+]";
-                    }
-                }
-                game_board[3][j - 1] = "[ ]";
-                game_board[3][j] = "[+]";
-                if (j == game_board.length - 1) {
-                    game_board[3][j] = "[ ]";
-                    game_board[3][0] = "[+]";
-                }
-            }
-            game_board[4][i - 1] = "[ ]";
-            game_board[4][i] = "[+]";
-        }
-        for (int i = 1; i < game_board.length; i++) {
-            for (int j = 1; j < game_board.length; j++) {
-                for (int k = 1; k < game_board.length; k++) {
-                    for (int l = 1; l < game_board.length; l++) {
-                        game_board[0][l - 1] = "[ ]";
-                        game_board[0][l] = "[+]";
-                        if (checker(game_board)) {
-                            printer(game_board);
-                            System.out.println();
-                        }
-                        if (l == game_board.length - 1) {
-                            game_board[0][l] = "[ ]";
-                            game_board[0][0] = "[+]";
-                        }
-                    }
-                    game_board[1][k - 1] = "[ ]";
-                    game_board[1][k] = "[+]";
-                    if (k == game_board.length - 1) {
-                        game_board[1][k] = "[ ]";
-                        game_board[1][0] = "[+]";
-                    }
-                }
-                game_board[2][j - 1] = "[ ]";
-                game_board[2][j] = "[+]";
-                if (j == game_board.length - 1) {
-                    game_board[2][j] = "[ ]";
-                    game_board[2][0] = "[+]";
-                }
-            }
-            game_board[3][i - 1] = "[ ]";
-            game_board[3][i] = "[+]";
-        }
-        for (int i = 1; i < game_board.length; i++) {
-            for (int j = 1; j < game_board.length; j++) {
-                for (int k = 1; k < game_board.length; k++) {
-                    game_board[0][k - 1] = "[ ]";
-                    game_board[0][k] = "[+]";
-                    if (checker(game_board)) {
-                        printer(game_board);
-                        System.out.println();
-                    }
-                    if (k == game_board.length - 1) {
-                        game_board[0][k] = "[ ]";
-                        game_board[0][0] = "[+]";
-                    }
-                }
-                game_board[1][j - 1] = "[ ]";
-                game_board[1][j] = "[+]";
-                if (j == game_board.length - 1) {
-                    game_board[1][j] = "[ ]";
-                    game_board[1][0] = "[+]";
-                }
-            }
-            game_board[2][i - 1] = "[ ]";
-            game_board[2][i] = "[+]";
-        }
-        for (int i = 1; i < game_board.length; i++) {
-            for (int j = 1; j < game_board.length; j++) {
-                game_board[0][j - 1] = "[ ]";
-                game_board[0][j] = "[+]";
-                if (checker(game_board)) {
-                    printer(game_board);
-                    System.out.println();
-                }
-                if (j == game_board.length - 1) {
-                    game_board[0][j] = "[ ]";
-                    game_board[0][0] = "[+]";
-                }
-            }
-            game_board[1][i - 1] = "[ ]";
-            game_board[1][i] = "[+]";
-            if (i == game_board.length - 1) {
-                game_board[1][i] = "[ ]";
-                game_board[1][0] = "[+]";
-            }
-        }
-        for (int i = 1; i < game_board.length; i++) {
-            game_board[0][i - 1] = "[ ]";
-            game_board[0][i] = "[+]";
-            if (checker(game_board)) {
-                printer(game_board);
-                System.out.println();
-            }
-        }
+        return emptyBoard;
     }
 
-    public static void printer(String[][] game_board) {
-        for (String[] strings : game_board) {
-            for (int j = 0; j < game_board.length; j++) {
-                System.out.print(strings[j]);
+    /**
+     * Метод печатает игровое поле в командную строку
+     *
+     * @param gameBoard игровое поле
+     */
+    private static void printBoard(String[][] gameBoard) {
+        for (String[] strings : gameBoard) {
+            for (String string : strings) {
+                System.out.print(string);
             }
             System.out.println();
         }
+        System.out.println();
     }
 
-    public static boolean checker(String[][] game_board) {
-        boolean flag = check_horizontal(game_board);
-        if (!check_vertical(game_board)) flag = false;
-        if (!check_diagonal_left_right(game_board)) flag = false;
-        if (!check_diagonal_right_left(game_board)) flag = false;
-        return flag;
-    }
-
-    public static boolean check_horizontal(String[][] game_board) {
-        for (String[] strings : game_board) {
-            int number_of_coincidences = 0;
-            for (int j = 0; j < game_board.length; j++) {
-                if (strings[j].equals("[+]")) {
-                    number_of_coincidences += 1;
-                }
+    /**
+     * Метод проверяет безопасно ли установить ферзя в текущую клетку
+     *
+     * @param gameBoard игровое поле
+     * @param row       строка в, которую планируется установка ферзя
+     * @param column    столбец в, который планируется установка ферзя
+     * @return установка безопасна?
+     */
+    private static boolean isSafe(String[][] gameBoard, int row, int column) {
+        for (int i = 0; i < column; i++) {
+            if (gameBoard[row][i].equals("[X]")) {
+                return false;
             }
-            if (number_of_coincidences > 1) {
+        }
+        for (int i = row, j = column; i >= 0 && j >= 0; i--, j--) {
+            if (gameBoard[i][j].equals("[X]")) {
+                return false;
+            }
+        }
+        for (int i = row, j = column; i < gameBoard.length && j >= 0; i++, j--) {
+            if (gameBoard[i][j].equals("[X]")) {
                 return false;
             }
         }
         return true;
     }
 
-    public static boolean check_vertical(String[][] game_board) {
-        for (int i = 0; i < game_board.length; i++) {
-            int number_of_coincidences = 0;
-            for (String[] strings : game_board) {
-                if (strings[i].equals("[+]")) {
-                    number_of_coincidences += 1;
-                }
-            }
-            if (number_of_coincidences > 1) {
-                return false;
+    /**
+     * Рекурсивный метод для установки ферзей.
+     * Печатает игровые поля, в которых удалось расставить ферзей согласно условию
+     *
+     * @param gameBoard игровое поле
+     * @param column    колонка для установки ферзя
+     */
+    private static void tryToPlace(String[][] gameBoard, int column) {
+        if (column == gameBoard.length) {
+            System.out.println("     [" + ++count + " Вариант]");
+            System.out.println();
+            printBoard(gameBoard);
+            return;
+        }
+        for (int i = 0; i < gameBoard.length; i++) {
+            if (isSafe(gameBoard, i, column)) {
+                gameBoard[i][column] = "[X]";
+                tryToPlace(gameBoard, column + 1);
+                gameBoard[i][column] = "[ ]";
             }
         }
-        return true;
-    }
-
-    public static boolean check_diagonal_left_right(String[][] game_board) {
-        int bias2 = 1;
-        for (int bias = 0; bias < 7; bias++) {
-            int number_of_coincidences = 0;
-            for (int i = 1 + bias; i >= 0; i--) {
-                int j;
-                if (i == 1 + bias) {
-                    j = 0;
-                } else if (i == 0) {
-                    j = 1 + bias;
-                } else {
-                    j = bias2 - i;
-                }
-                if (game_board[i][j].equals("[+]")) {
-                    number_of_coincidences += 1;
-                }
-            }
-            if (number_of_coincidences > 1) {
-                return false;
-            }
-            bias2 += 1;
-        }
-        bias2 = 13;
-        for (int bias = 0; bias < 6; bias++) {
-            int number_of_coincidences = 0;
-            for (int j = 7; j >= 6 - bias; j--) {
-                int i;
-                if (j == 7) {
-                    i = 6 - bias;
-                } else if (j == 6 - bias) {
-                    i = 7;
-                } else {
-                    i = bias2 - j;
-                }
-                if (game_board[i][j].equals("[+]")) {
-                    number_of_coincidences += 1;
-                }
-            }
-            if (number_of_coincidences > 1) {
-                return false;
-            }
-            bias2 -= 1;
-        }
-        return true;
-    }
-
-    public static boolean check_diagonal_right_left(String[][] game_board) {
-        int bias2 = 6;
-        for (int bias = 0; bias < 7; bias++) {
-            int number_of_coincidences = 0;
-            for (int i = 6 - bias; i <= 7; i++) {
-                int j;
-                if (i == 6 - bias) {
-                    j = 0;
-                } else if (i == 7) {
-                    j = 1 + bias;
-                } else {
-                    j = i - bias2;
-                }
-                if (game_board[i][j].equals("[+]")) {
-                    number_of_coincidences += 1;
-                }
-
-            }
-            if (number_of_coincidences > 1) {
-                return false;
-            }
-            bias2 -= 1;
-        }
-        bias2 = 6;
-        for (int bias = 0; bias < 6; bias++) {
-            int number_of_coincidences = 0;
-            for (int i = 0; i <= 1 + bias; i++) {
-                int j;
-                if (i == 0) {
-                    j = 6 - bias;
-                } else if (i == 1 + bias) {
-                    j = 7;
-                } else {
-                    j = bias2 + i;
-                }
-                if (game_board[i][j].equals("[+]")) {
-                    number_of_coincidences += 1;
-                }
-            }
-            if (number_of_coincidences > 1) {
-                return false;
-            }
-            bias2 -= 1;
-        }
-        return true;
     }
 }
