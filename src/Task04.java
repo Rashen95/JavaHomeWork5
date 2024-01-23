@@ -23,9 +23,8 @@ public class Task04 {
     }
 
     /**
-     * Метод создает пустое игровое поле
+     * Метод создает квадратное пустое игровое поле размером boardSize
      *
-     * @param boardSize размер игрового поля
      * @return пустое игровое поле
      */
     private static String[][] createEmptyBoard() {
