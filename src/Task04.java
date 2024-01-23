@@ -11,7 +11,10 @@ public class Task04 {
         long start = System.currentTimeMillis();
 
         //Поиск всех вариантов
-        tryToPlace(createEmptyBoard(boardSize), 0);
+        tryToPlace(createEmptyBoard(), 0);
+        if (count == 0) {
+            System.out.println("Нет решений");
+        }
 
         //Засекаем время окончания операции поиска вариантов
         long finish = System.currentTimeMillis();
@@ -25,7 +28,7 @@ public class Task04 {
      * @param boardSize размер игрового поля
      * @return пустое игровое поле
      */
-    private static String[][] createEmptyBoard(int boardSize) {
+    private static String[][] createEmptyBoard() {
         String[][] emptyBoard = new String[boardSize][boardSize];
         for (String[] strings : emptyBoard) {
             Arrays.fill(strings, "[ ]");
@@ -84,8 +87,7 @@ public class Task04 {
      */
     private static void tryToPlace(String[][] gameBoard, int column) {
         if (column == gameBoard.length) {
-            System.out.println("     [" + ++count + " Вариант]");
-            System.out.println();
+            System.out.println("[" + ++count + " Вариант]");
             printBoard(gameBoard);
             return;
         }
